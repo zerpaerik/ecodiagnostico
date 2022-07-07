@@ -1,9 +1,9 @@
 @if(\Auth::user()->rol == 1)
 
 <a href="{{route('home')}}" class="brand-link">
-<img src="logo.jpeg" class="img-circle elevation-2" alt="User Image" width="40">
+<img src="logo_eco.jpeg" class="img-circle elevation-2" alt="User Image" width="40">
       
-      <span class="brand-text font-weight-light">ADMIN EcoDiagnostico Abancay</span>
+      <span class="brand-text font-weight-light">EcoDiagnostico ADMIN</span>
     </a>
 
 <div class="sidebar">
@@ -333,33 +333,7 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-money-check-alt"></i>
-              <p>
-                Métodos Anticonceptivos
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-
-            <li class="nav-item">
-                <a href="{{route('metodos.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Lista de Métodos</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{route('llamar.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Pacientes por Llamar</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
+        
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -941,33 +915,7 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-money-check-alt"></i>
-              <p>
-                Métodos Anticonceptivos
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-
-            <li class="nav-item">
-                <a href="{{route('metodos.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Lista de Métodos</p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{{route('llamar.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Pacientes por Llamar</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
+          
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1298,33 +1246,7 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-money-check-alt"></i>
-              <p>
-                Métodos Anticonceptivos
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-
-            <li class="nav-item">
-                <a href="{{route('metodos.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Lista de Métodos</p>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a href="{{route('llamar.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Pacientes por Llamar</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
+          
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -1570,36 +1492,7 @@
             </ul>
           </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-money-check-alt"></i>
-              <p>
-                Métodos Anticonceptivos
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-
-            <li class="nav-item">
-                <a href="{{route('metodos.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Lista de Métodos</p>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a href="{{route('llamar.index')}}" class="nav-link">
-                  <i class="fas fa-hand-holding-usd nav-icon"></i>
-                  <p>Pacientes por Llamar</p>
-                </a>
-              </li>
-              
-            </ul>
-          </li>
-
-        
-
+         
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-money-check-alt"></i>
@@ -1610,8 +1503,7 @@
             </a>
             <ul class="nav nav-treeview">
 
-           
-
+          
 
             <li class="nav-item">
                 <a href="{{route('historial.pacientes')}}" class="nav-link">

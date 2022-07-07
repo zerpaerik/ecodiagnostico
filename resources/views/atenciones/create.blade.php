@@ -202,7 +202,7 @@
     <a class="nav-link" data-toggle="tab" href="#ray">Rayos X</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#sal">Salud Mental</a>
+    <a class="nav-link" data-toggle="tab" href="#sal">Tomografia</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" data-toggle="tab" href="#lab">Laboratorios</a>
@@ -214,7 +214,7 @@
     <a class="nav-link" data-toggle="tab" href="#con">Consultas/Controles</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#met">Métodos Anticonceptivos</a>
+    <a class="nav-link" data-toggle="tab" href="#met">Desintometria</a>
   </li>
 </ul>
 
@@ -419,17 +419,17 @@
 
   <div class="tab-pane container fade" id="sal">
     <div class="row">
-              <label class="col-sm-6 alert"><i class="fa fa-tasks" aria-hidden="true"></i> Salud M Seleccionadas</label>
+              <label class="col-sm-6 alert"><i class="fa fa-tasks" aria-hidden="true"></i>Tomografias Seleccionadas</label>
               <!-- sheepIt Form -->
               <div id="salud" class="embed ">
               
                   <!-- Form template-->
                   <div id="salud_template" class="template row">
   
-                  <label for="salud_#index#_salu" class="col-sm-1 control-label">Salud Mental</label>
+                  <label for="salud_#index#_salu" class="col-sm-1 control-label">Tomografia</label>
                       <div class="col-sm-3">
                         <select id="salud_#index#_salu" name="id_salu[salud][#index#][salu]" class="selectSalud form-control">
-                          <option value="1">Seleccionar Salud M</option>
+                          <option value="1">Seleccionar Tomografia</option>
                           @foreach($salud as $sa)
                             <option value="{{$sa->id}}">
                               {{$sa->nombre}} Precio:{{$sa->precio}}
@@ -483,7 +483,7 @@
               <!-- /sheepIt Form --> 
             </div>
   
-    </div>
+  </div>
 
     
 
@@ -666,40 +666,71 @@
                   </div>
                   </div>
   <div class="tab-pane container fade" id="met"> <div class="card-body">
-                    <div class="row">
-                    <div class="col-md-4">
-                  <label>Producto</label>
-                  <select class="form-control" name="metodo">
-                    <option value="">Seleccione</option>
-                  @foreach($met as $m)
-                  <option value="{{$m->id}}">{{$m->nombre}}</option>
-                  @endforeach
-                </select>
-
-                      
-                  </div>
-                  <div class="col-md-4">
-                    <label for="exampleInputEmail1">Precio</label>
-                    <input type="float" class="form-control monto abono" id="email" name="precio_met" placeholder="Precio" onchange="sumar();sumar_ab()">
-                  </div>
-                  <div class="col-md-4">
-                  <label>TipoPago</label>
-                        <select class="form-control" name="tipop_met">
-						              	<option value="" disabled>Seleccione</option>
-                            <option value="EF">Efectivo</option>
-                            <option value="TJ">Tarjeta</option>
-                            <option value="DP">Depósito</option>
-                            <option value="YP">Yape</option>
+  <div class="row">
+              <label class="col-sm-6 alert"><i class="fa fa-tasks" aria-hidden="true"></i>Desintometria Seleccionadas</label>
+              <!-- sheepIt Form -->
+              <div id="desin" class="embed ">
+              
+                  <!-- Form template-->
+                  <div id="desin_template" class="template row">
+  
+                  <label for="desin_#index#_salu" class="col-sm-1 control-label">Desintometria</label>
+                      <div class="col-sm-3">
+                        <select id="desin_#index#_salu" name="id_desi[desi][#index#][desi]" class="selectDes form-control">
+                          <option value="1">Seleccionar Desintometria</option>
+                          @foreach($desin as $des)
+                            <option value="{{$des->id}}">
+                              {{$des->nombre}} Precio:{{$des->precio}}
+                            </option>
+                          @endforeach
                         </select>
+                      </div>
+  
+                      <label for="desin_#index#_monto" class="col-sm-1 control-label">Monto</label>
+                      <div class="col-sm-1">
+                        <input id="desin_#index#_montoHidden" name="monto_h[desi][#index#][montoHidden]" class="text" type="hidden" value="">
+  
+                        <input id="desin_#index#_monto" name="monto_s[desi][#index#][monto]" type="text" class="number form-control monto" onchange="sumar();" placeholder="Precio" data-toggle="tooltip" data-placement="bottom" title="Precio">
+                      </div>
+  
+                      <label for="desin_#index#_abonoL" class="col-sm-1 control-label">Abono.</label>
+                      <div class="col-sm-1">
+  
+                        <input id="desin_#index#_abonoL" name="monto_abol[desi][#index#][abono]" type="float" class="number form-control abonoL abono" onchange="sumar_ab();" placeholder="Abono" data-toggle="tooltip" data-placement="bottom" title="Abono">
+                      </div>
+  
+                      <label for="desin_#index#_tipop" class="col-sm-1 control-label">TipoPago</label>
+                      <div class="col-sm-2">
+                        <select id="desin_#index#_salu" name="id_pago[desi][#index#][tipop]" class="form-control">
+                        <option value="" disabled>Seleccione</option>
+                          <option value="EF">Efectivo</option>
+                          <option value="TJ">Tarjeta</option>
+                          <option value="DP">Depósito</option>
+                          <option value="YP">Yape</option>
+  
+                        </select>
+                      </div>
+  
+                     
+  
+                      <a id="desin_remove_current" style="cursor: pointer;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
                   </div>
-
-
+                  <!-- /Form template-->
+                  
+                  <!-- No forms template -->
+                  <div id="desin_noforms_template" class="noItems col-sm-12 text-center">Ningún Producto</div>
+                  <!-- /No forms template-->
+                  
+                  <!-- Controls -->
+                  <div id="desin_controls" class="controls col-sm-11 col-sm-offset-1">
+                      <div id="desin_add" class="btn btn-default form add"><a><span><i class="fa fa-plus-circle"></i> Agregar SaludM</span></a></div>
                   </div>
-                 
-
-                 
-                  </div>
-                  </div>
+                  <!-- /Controls -->
+                  
+              </div>
+              <!-- /sheepIt Form --> 
+            </div>
+                    
 
 
 </div>
@@ -976,6 +1007,27 @@ $(document).on('change','.selectServ',function(){
       });
     });
 
+    $(document).on('change','.selectDes',function(){
+      var labId = $(this).attr('id');
+      var labArr = labId.split('_');
+      var id = labArr[1];
+
+      $.ajax({
+         type: "GET",
+         url:  "atenciones/getServicio/"+$(this).val(),
+         success: function(a) {
+           
+            $('#desin_'+id+'_montoHidden').val(a.precio);
+            $('#desin_'+id+'_monto').val(a.precio);
+            var total = parseFloat($('#total').val());
+            $("#total").val(total + parseFloat(a.precio));
+            sumar();
+          
+          
+         }
+      });
+    });
+
     $(document).on('change','.selectLab',function(){
       var labId = $(this).attr('id');
       var labArr = labId.split('_');
@@ -1138,6 +1190,26 @@ var botonDisabled = true;
     });
 
     var phonesForm = $("#salud").sheepIt({
+        separator: '',
+        allowRemoveCurrent: true,
+        allowAdd: true,
+        allowRemoveAll: true,
+        allowRemoveLast: true,
+
+        // Limits
+        maxFormsCount: 10,
+        minFormsCount: 1,
+        iniFormsCount: 0,
+
+        removeAllConfirmationMsg: 'Seguro que quieres eliminar todos?',
+        afterRemoveCurrent: function(source, event){
+         sumar();
+         restar();
+
+        }
+    });
+
+    var phonesForm = $("#desin").sheepIt({
         separator: '',
         allowRemoveCurrent: true,
         allowAdd: true,

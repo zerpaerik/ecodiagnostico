@@ -107,6 +107,18 @@ class AtencionesController extends Controller
         ->orderBy('a.id','DESC')
         ->where('a.sede', '=', $request->session()->get('sede'));
 
+        $desi = DB::table('atenciones as a')
+        ->select('a.id','a.tipo_origen','a.id_origen','a.observaciones','a.eliminado_por','a.id_atec','a.id_tipo','a.pagado','a.atendido','a.sede','a.usuario','a.created_at','a.estatus','a.id_paciente','a.tipo_atencion','a.monto','a.abono','a.tipo_pago','b.nombres','b.apellidos','b.dni','c.name as nameo','c.lastname as lasto','d.name as nameu','d.lastname as lastu','s.nombre as detalle')
+        ->join('pacientes as b','b.id','a.id_paciente')
+        ->join('users as c','c.id','a.id_origen')
+        ->join('users as d','d.id','a.usuario')
+        ->join('servicios as s','s.id','a.id_tipo')
+        ->where('a.tipo_atencion', '=', 12)
+        ->where('a.monto', '!=', '0')
+        ->whereBetween('a.created_at', [date('Y-m-d 00:00:00', strtotime($f1)), date('Y-m-d 23:59:59', strtotime($f1))])
+        ->orderBy('a.id','DESC')
+        ->where('a.sede', '=', $request->session()->get('sede'));
+
         $ana = DB::table('atenciones as a')
         ->select('a.id','a.tipo_origen','a.id_origen','a.observaciones','a.eliminado_por','a.id_atec','a.id_tipo','a.pagado','a.atendido','a.sede','a.usuario','a.created_at','a.estatus','a.id_paciente','a.tipo_atencion','a.monto','a.abono','a.tipo_pago','b.nombres','b.apellidos','b.dni','c.name as nameo','c.lastname as lasto','d.name as nameu','d.lastname as lastu','s.nombre as detalle')
         ->join('pacientes as b','b.id','a.id_paciente')
@@ -175,6 +187,7 @@ class AtencionesController extends Controller
         ->union($ana)
         ->union($metodos)
         ->union($salud)
+        ->union($desi)
         ->union($paq)
         ->union($consultas)
         ->get(); 
@@ -244,6 +257,18 @@ class AtencionesController extends Controller
         ->join('users as d','d.id','a.usuario')
         ->join('servicios as s','s.id','a.id_tipo')
         ->where('a.tipo_atencion', '=', 8)
+        ->where('a.monto', '!=', '0')
+        ->whereBetween('a.created_at', [date('Y-m-d 00:00:00', strtotime($f1)), date('Y-m-d 23:59:59', strtotime($f1))])
+        ->where('a.sede', '=', $request->session()->get('sede'))   
+        ->orderBy('a.id','desc');
+
+        $desi = DB::table('atenciones as a')
+        ->select('a.id','a.tipo_origen','a.id_origen','a.observaciones','a.eliminado_por','a.id_atec','a.id_tipo','a.pagado','a.atendido','a.sede','a.usuario','a.created_at','a.estatus','a.id_paciente','a.tipo_atencion','a.monto','a.abono','a.tipo_pago','b.nombres','b.apellidos','b.dni','c.name as nameo','c.lastname as lasto','d.name as nameu','d.lastname as lastu','s.nombre as detalle')
+        ->join('pacientes as b','b.id','a.id_paciente')
+        ->join('users as c','c.id','a.id_origen')
+        ->join('users as d','d.id','a.usuario')
+        ->join('servicios as s','s.id','a.id_tipo')
+        ->where('a.tipo_atencion', '=', 12)
         ->where('a.monto', '!=', '0')
         ->whereBetween('a.created_at', [date('Y-m-d 00:00:00', strtotime($f1)), date('Y-m-d 23:59:59', strtotime($f1))])
         ->where('a.sede', '=', $request->session()->get('sede'))   
@@ -319,6 +344,7 @@ class AtencionesController extends Controller
         ->union($ana)
         ->union($metodos)
         ->union($salud)
+        ->union($desi)
         ->union($consultas)
         ->union($paq)
         ->orderBy('id','desc')
@@ -552,6 +578,7 @@ class AtencionesController extends Controller
         $rayos = Servicios::where('estatus','=',1)->where('tipo','=','RAYOS')->orderBy('nombre','ASC')->get();
         $otros = Servicios::where('estatus','=',1)->where('tipo','=','OTROS')->orderBy('nombre','ASC')->get();
         $salud = Servicios::where('estatus','=',1)->where('tipo','=','SALUD')->orderBy('nombre','ASC')->get();
+        $desin = Servicios::where('estatus','=',1)->where('tipo','=','DESINTOMETRIA')->orderBy('nombre','ASC')->get();
         $analisis = Analisis::where('estatus','=',1)->orderBy('nombre','ASC')->get();
         $paquetes = Paquetes::where('estatus','=',1)->orderBy('nombre','ASC')->get();
 
@@ -569,7 +596,7 @@ class AtencionesController extends Controller
             $res = 'NO';
             }
 
-        return view('atenciones.create', compact('paquetes','personal','ecografias','rayos','otros','analisis','paciente','res','met','salud'));
+        return view('atenciones.create', compact('paquetes','personal','ecografias','rayos','otros','analisis','paciente','res','met','salud', 'desin'));
     }
 
     public function getServicio($id)
@@ -947,7 +974,7 @@ return view('atenciones.particular');
                   }
               }
 
-            //GUARDANDO SALUD MENTAL
+            //GUARDANDO TOMOGRAFIA
 
             //dd($request->all());
 
@@ -980,7 +1007,7 @@ return view('atenciones.particular');
 
                       $cre = new Creditos();
                       $cre->origen = 'SERVICIO';
-                      $cre->descripcion = 'INGRESO POR SERVICIO';
+                      $cre->descripcion = 'INGRESO POR TOMOGRAFIA';
                       $cre->id_atencion =  $lab->id;
                       $cre->tipopago =  $request->id_pago['salud'][$key]['tipop'];
                       $cre->monto = (float)$request->monto_abol['salud'][$key]['abono'];
@@ -1000,7 +1027,7 @@ return view('atenciones.particular');
 
                       $cre = new CreditosB();
                       $cre->origen = 'SERVICIO';
-                      $cre->descripcion = 'INGRESO POR SERVICIO';
+                      $cre->descripcion = 'INGRESO POR TOMOGRAFIA';
                       $cre->id_atencion =  $lab->id;
                       $cre->tipopago =  $request->id_pago['salud'][$key]['tipop'];
                       $cre->monto = (float)$request->monto_abol['salud'][$key]['abono'];
@@ -1532,6 +1559,129 @@ return view('atenciones.particular');
                               $com->id_responsable = $searchUsuarioID->id;
                               $com->id_origen = $request->origen;
                               $com->monto = (float)$request->monto_s['ecografias'][$key]['monto'] * $servicio->porcentaje1 / 100;
+                              $com->estatus = 1;
+                              $com->usuario = Auth::user()->id;
+                              $com->sede = $request->session()->get('sede');
+                              $com->save();
+                          } else {
+
+                 /* $com = new Comisiones();
+                  $com->id_atencion =  $lab->id;
+                  $com->detalle =  $servicio->nombre;
+                  $com->porcentaje = $servicio->porcentaje2;
+                  $com->monto = (float)$request->monto_s['ecografias'][$key]['monto'] * $servicio->porcentaje2 / 100;
+                  $com->estatus = 1;
+                  $com->usuario = Auth::user()->id;
+                  $com->save();*/
+                          }
+                      }
+                  }
+              }
+
+                 //GUARDANDO DESINTOMETRIA
+
+                 if ($request->id_desi != null && $request->id_desi['desi'][0]['desi'] != '1') {
+                  foreach ($request->id_desi['desi'] as $key => $desi) {
+                      if (!is_null($desi['desi'])) {
+                          $servicio = Servicios::where('id', '=', $desi['desi'])->first();
+
+                          //TIPO ATENCION DESINTOMETRIA= 12
+                          $lab = new Atenciones();
+                          $lab->tipo_origen =  $request->origen;
+                          if ($request->origen == 3) {
+                              $lab->id_origen = 99;
+                          } else {
+                              $lab->id_origen = $searchUsuarioID->id;
+                          }
+                          $lab->id_paciente =  $request->paciente;
+                          $lab->tipo_atencion = 12;
+                          $lab->id_tipo = $desi['desi'];
+                          $lab->monto = (float)$request->monto_s['desi'][$key]['monto'];
+                          $lab->abono = (float)$request->monto_abol['desi'][$key]['abono'];
+                          $lab->resta = (float)$request->monto_s['desi'][$key]['monto'] - (float)$request->monto_abol['ecografias'][$key]['abono'];
+                          $lab->tipo_pago = $request->id_pago['desi'][$key]['tipop'];
+                          $lab->usuario = Auth::user()->id;
+                          $lab->sede = $request->session()->get('sede');
+                          $lab->observaciones = $request->observaciones;
+                          $lab->id_atec =  $atec->id;
+                          $lab->save();
+
+                
+                          $cre = new Creditos();
+                          $cre->origen = 'DESINTOMETRIA';
+                          $cre->descripcion = 'INGRESO POR DESINTOMETRIA';
+                          $cre->id_atencion =  $lab->id;
+                          $cre->tipopago =  $request->id_pago['desi'][$key]['tipop'];
+                          $cre->monto = (float)$request->monto_abol['desi'][$key]['abono'];
+                          if ($request->id_pago['desi'][$key]['tipop'] == 'EF') {
+                            $cre->efectivo = (float)$request->monto_abol['desi'][$key]['abono'];
+                          } elseif($request->id_pago['desi'][$key]['tipop'] == 'TJ') {
+                            $cre->tarjeta =(float)$request->monto_abol['desi'][$key]['abono'];
+                          } elseif($request->id_pago['desi'][$key]['tipop'] == 'DP') {
+                            $cre->dep = (float)$request->monto_abol['desi'][$key]['abono'];
+                          } else {
+                            $cre->yap = (float)$request->monto_abol['desi'][$key]['abono'];
+                          }
+                          $cre->usuario = Auth::user()->id;
+                          $cre->sede = $request->session()->get('sede');
+                          $cre->fecha = date('Y-m-d');
+                          $cre->save();
+                          
+                          $cre = new CreditosB();
+                          $cre->origen = 'DESINTOMETRIA';
+                          $cre->descripcion = 'INGRESO POR DESINTOMETRIA';
+                          $cre->id_atencion =  $lab->id;
+                          $cre->tipopago =  $request->id_pago['desi'][$key]['tipop'];
+                          $cre->monto = (float)$request->monto_abol['desi'][$key]['abono'];
+                          if ($request->id_pago['desi'][$key]['tipop'] == 'EF') {
+                            $cre->efectivo = (float)$request->monto_abol['desi'][$key]['abono'];
+                          } elseif($request->id_pago['desi'][$key]['tipop'] == 'TJ') {
+                            $cre->tarjeta =(float)$request->monto_abol['desi'][$key]['abono'];
+                          } elseif($request->id_pago['desi'][$key]['tipop'] == 'DP') {
+                            $cre->dep = (float)$request->monto_abol['desi'][$key]['abono'];
+                          } else {
+                            $cre->yap = (float)$request->monto_abol['desi'][$key]['abono'];
+                          }
+                          $cre->usuario = Auth::user()->id;
+                          $cre->sede = $request->session()->get('sede');
+                          $cre->fecha = date('Y-m-d');
+                          $cre->save();
+                          $rs = new ResultadosServicios();
+                          $rs->id_atencion =  $lab->id;
+                          $rs->id_servicio = $desi['desi'];
+                          $rs->monto = (float)$request->monto_abol['desi'][$key]['abono'];
+                          $rs->save();
+
+                   
+                          if ($request->monto_s['desi'][$key]['monto'] > $request->monto_abol['desi'][$key]['abono']) {
+                              $cb = new Cobrar();
+                              $cb->id_atencion =  $lab->id;
+                              $cb->detalle =  $servicio->nombre;
+                              $cb->resta =(float)$request->monto_s['desi'][$key]['monto'] - (float)$request->monto_abol['ecografias'][$key]['abono'];
+                              $cb->save();
+                          }
+
+
+                          if ($request->origen == 1  && $servicio->porcentaje > 0) {
+                              $com = new Comisiones();
+                              $com->id_atencion =  $lab->id;
+                              $com->detalle =  $servicio->nombre;
+                              $com->porcentaje = $servicio->porcentaje;
+                              $com->id_responsable = $searchUsuarioID->id;
+                              $com->id_origen = $request->origen;
+                              $com->monto = (float)$request->monto_s['desi'][$key]['monto'] * $servicio->porcentaje / 100;
+                              $com->estatus = 1;
+                              $com->usuario = Auth::user()->id;
+                              $com->sede = $request->session()->get('sede');
+                              $com->save();
+                          } elseif ($request->origen == 2 && $servicio->porcentaje1 > 0) {
+                              $com = new Comisiones();
+                              $com->id_atencion =  $lab->id;
+                              $com->detalle =  $servicio->nombre;
+                              $com->porcentaje = $servicio->porcentaje1;
+                              $com->id_responsable = $searchUsuarioID->id;
+                              $com->id_origen = $request->origen;
+                              $com->monto = (float)$request->monto_s['desi'][$key]['monto'] * $servicio->porcentaje1 / 100;
                               $com->estatus = 1;
                               $com->usuario = Auth::user()->id;
                               $com->sede = $request->session()->get('sede');
