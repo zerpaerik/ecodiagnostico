@@ -140,7 +140,7 @@
                   <tr>
                     <td>{{date('d-M-y H:i', strtotime($an->created_at))}}</td>
                     @if($an->sede == 1)
-                    <td>PROCERES</td>
+                    <td>PRINCIPAL</td>
                     @elseif($an->sede == 2)
                     <td>CANTO REY</td>
                     @elseif($an->sede == 3)

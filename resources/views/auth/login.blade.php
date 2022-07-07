@@ -56,12 +56,9 @@
           </div>
         </div>
 
-        <div class="input-group mb-3">
-        <select class="form-control" name="sede">
-						              	<option value="1">PRINCIPAL</option>
-                        
-
-
+              <div class="input-group mb-3">
+                        <select class="form-control" name="sede">
+						              <option value="1">PRINCIPAL</option>
                         </select>        
               <div class="input-group-append">
             <div class="input-group-text">
