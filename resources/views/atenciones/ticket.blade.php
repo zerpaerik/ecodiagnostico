@@ -52,7 +52,7 @@
 
 
     <p style="margin-top: -20px;"><strong>________________________________________________________</strong>  </p>
-    <p style="margin-top: -15px;font-size: 14px;text-align: center;"><strong>NÚMERO DE RECIBO ELECTRÓNICO:0000{{ $header->id}}</strong></p>
+    <p style="margin-top: -15px;font-size: 14px;text-align: center;"><strong>NÚMERO DE RECIBO ELECTRÓNICO:0000</strong></p>
     <p style="margin-top: -30px;"><strong>________________________________________________________</strong>  </p>
 
     <p style="margin-left: -80px;font-size: 14px;"><strong>FECHA:</strong> {{$header->created_at}} </p>
