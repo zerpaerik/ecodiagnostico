@@ -41,14 +41,12 @@
 	</div>
 
     <div  style="font-size: 15px; text-align: center;margin-bottom:-60px;margin-top: -30px;">
-
-		<p><strong>ECODIAGNÒSTICO ABANCAY-{{Session::get('sedeName')}}</strong></p>
+    
+		<p><strong>ECODIAGNOSTICO ABANCAY</strong></p>
+    <p><strong>TODOS LOS SERVICIOS EN UN SOLO LUGAR</strong></p>
 		<p style="margin-top: -20px;"><strong>RUC: 20490094611</strong></p>
+    <p style="margin-top: -20px;"><strong>TELF: 083 635326</strong></p>
     <p style="margin-top: -10px;"><strong>Av Arenas 140</strong></p>
-    <p style="margin-top: -10px;"><strong>ECODIAGNOSTICO INTEGRAL, todos los servicios en un solo lugar.!!!</strong></p>
-
-
-
 
 
     <p style="margin-top: -20px;"><strong>________________________________________________________</strong>  </p>
