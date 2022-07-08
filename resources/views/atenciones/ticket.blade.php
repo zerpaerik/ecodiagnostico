@@ -37,13 +37,13 @@
     <br><br>
 
 	<div class="" style="font-size: 35px; text-align: center;margin-bottom: 15px;">
-		<img src="/var/www/html/ecodiagnostico/public/logo_negro.jpeg"  style="width: 40%; color: black;"/>
+		<img src="/var/www/html/ecodiagnostico/public/logo_negro.jpeg"  style="width: 70%; color: black;"/>
 	</div>
 
     <div  style="font-size: 15px; text-align: center;margin-bottom:-60px;margin-top: -30px;">
     
 		<p><strong>ECODIAGNOSTICO ABANCAY</strong></p>
-    <p><strong>TODOS LOS SERVICIOS EN UN SOLO LUGAR</strong></p>
+    <p style="font-size: 11px;"><strong>Todos los servicios en un solo lugar</strong></p>
 		<p style="margin-top: -20px;"><strong>RUC: 20490094611</strong></p>
     <p style="margin-top: -20px;"><strong>TELF: 083 635326</strong></p>
     <p style="margin-top: -10px;"><strong>Av Arenas 140</strong></p>
