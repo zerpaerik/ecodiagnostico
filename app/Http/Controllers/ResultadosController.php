@@ -16,6 +16,7 @@ use App\PlacasMalogradas;
 use App\Comisiones;
 use App\ResultadosServicios;
 use App\ResultadosLaboratorio;
+use App\ArchivosResultados;
 use Auth;
 use Illuminate\Http\Request;
 use PhpOffice\PhpWord\TemplateProcessor;
@@ -1046,6 +1047,70 @@ class ResultadosController extends Controller
     ->with('success','Modificado Exitosamente!');
 
         //
+    }
+
+    
+    public function ver_archivos_resultados($id){
+
+      $archivos = ArchivosResultados::where('id_resultado','=',$id)->get();
+
+      return view('resultados.ver_archivos', compact('archivos','id'));
+
+
+
+    }
+
+    public function guardar_archivos_get($id){
+
+      return view('resultados.cargar_archivos', compact('id'));
+
+    }
+
+    public function guardar_archivo(Request $request){
+
+
+
+      $usuario = DB::table('users')
+      ->select('*')
+      ->where('id','=', Auth::user()->id)
+      ->first();  
+
+
+      if (isset($request->monto_ls)) {
+        foreach ($request->monto_ls['laboratorios'] as $key => $lab) {
+
+      
+
+          $atec_a = new ArchivosResultados();
+          $atec_a->id_resultado =$request->id_resultado;
+          $img = $request->monto_ls['laboratorios'][$key]['montos'];
+          $atec_a->nombre= $request->monto_lss['laboratorios'][$key]['montoss'];;
+          $nombre_imagen=$img->getClientOriginalName();
+          $atec_a->usuario=Auth::user()->id;
+          $atec_a->archivo=$nombre_imagen;
+          if ($atec_a->save()) {
+            \Storage::disk('public')->put($nombre_imagen, \File::get($img));
+          }
+          \DB::commit();
+
+        }
+      }
+
+
+
+
+      return redirect()->route('resultados.index')
+      ->with('success','Creado Exitosamente!');
+         
+    }
+
+    public function eliminar_archivos($id){
+
+      $comisionescc = ArchivosResultados::where('id', '=', $id)->first();
+      $comisionescc->delete();
+
+      return back();
+
     }
 
  

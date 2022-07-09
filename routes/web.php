@@ -274,6 +274,11 @@ Route::get('resultados-reversar-{id}', 'ResultadosController@reversar');
 Route::get('resultados-reversarl-{id}', 'ResultadosController@reversarl');
 Route::get('modelo-informe-{id}-{id2}', 'ResultadosController@modelo_informe');
 Route::get('modelo-informel-{id}-{id2}', 'ResultadosController@modelo_informel');
+Route::get('resultados-archivo-{id}', 'ResultadosController@ver_archivos_resultados');
+Route::get('resultados-archivos-guardar-{id}', 'ResultadosController@guardar_archivos_get');
+Route::post('resultados_archivo', 'ResultadosController@guardar_archivo');
+Route::get('archivosr-eliminar-{id}', 'ResultadosController@eliminar_archivos');
+
 
 Route::get('resultados-guardar-{id}', 'ResultadosController@guardar_informe');
 Route::get('resultados-guardarl-{id}', 'ResultadosController@guardar_informel');

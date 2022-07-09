@@ -127,14 +127,18 @@
                     <td>{{$an->lastname}} {{$an->name}}</td>
                     <td>{{$an->servicio}}</td>
                     <td>
+                 
 
                       @if($an->informe) 
 
-                      <a href="resultados-desoc-{{$an->id}}" class="btn btn-danger">Reversar</a>
+                      <a href="resultados-desoc-{{$an->id}}" class="btn-sm btn-danger">Reversar</a>
 	
-                      <a href="/modelo-informe-{{$an->id}}-{{$an->informe}}" class="btn btn-primary" target="_blank">Descargar Modelo</a>
+                      <a href="/modelo-informe-{{$an->id}}-{{$an->informe}}" class="btn-sm btn-primary" target="_blank">Descargar Modelo</a>
 
-                      <a href="resultados-guardar-{{$an->id}}" class="btn btn-success">Adjuntar Informe</a>
+                      <a href="resultados-guardar-{{$an->id}}" class="btn-sm btn-success">Adjuntar Informe</a>
+                      <a href="resultados-archivo-{{$an->id}}" class="btn-sm btn-warning">Archivos</a>
+
+                    
 
 
                       @else
@@ -144,7 +148,6 @@
                         <form action="{{'resultados-asoc-' .$an->id}}" method="get">
                                     <select class="form-control" name="informe">
                                     <option value="">Seleccione</option>
-                                    @if(Session::get('sedeName') == 'PRINCIPAL')
                                     <option value="ECOGRAFIA  ABDOMINAL NORMAL.docx">ECOGRAFIA  ABDOMINAL NORMAL</option>
                                     <option value="ECOGRAFIA  DE HOMBRO NORMAL.docx">ECOGRAFIA  DE HOMBRO NORMAL</option>
                                     <option value="ECOGRAFIA  DE MAMAS - NORMAL.docx">ECOGRAFIA  DE MAMAS - NORMAL</option>
@@ -183,21 +186,22 @@
                                     <option value="TAC UROTEM NORMAL.docx">TAC UROTEM NORMAL</option>
 
 
-                                    @else
 
                                 </select>
 
                                 </td>
                              
 
-                                @endif
                                 <td>
 
                                   <input type="hidden" name="id" value="{{$an->id}}">
 
 
-                                  <input type="submit" class="btn btn-success" value="Asociar">
+                                  <input type="submit" class="btn-sm btn-success" value="Asociar">
+                                  <a style="margin-top: 10px;" href="resultados-archivo-{{$an->id}}" class="btn-sm btn-warning">Archivos</a>
+
                                   </td>
+                                 
 
                               </tr>
                               </form>
