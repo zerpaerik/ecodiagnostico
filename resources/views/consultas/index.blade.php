@@ -146,8 +146,23 @@
                     </a>
                     @endif
 
+                    @else
+
+                    <span class="badge bg-success">YA FUE ATENDIDO</span>
+
+                   
+
+                          <a class="btn btn-primary btn-sm" href="consulta-receta-{{$an->id}}" target="_blank">
+                              <i class="fas fa-eye">
+                              </i>
+                              Ver Receta
+                          </a>
+
                     @endif
 
+                         
+
+                        
                          
 
                         

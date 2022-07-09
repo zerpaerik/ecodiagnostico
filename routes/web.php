@@ -331,6 +331,7 @@ Route::get('consultas-create', 'ConsultasController@create')->name('consultas.cr
 Route::post('consultas/create', 'ConsultasController@store')->middleware('auth');
 Route::get('consultas-delete-{id}', 'ConsultasController@delete')->middleware('auth');
 Route::get('cobrconsultasar-edit-{id}', 'ConsultasController@edit')->name('ingresos.edit');
+Route::get('consulta-receta-{id}', 'ConsultasController@receta');
 Route::post('consultas/edit', 'ConsultasController@update');
 Route::get('consultas-ticket-{id}', 'ConsultasController@ticket');
 Route::get('historias', 'ConsultasController@historias')->name('historias.index');

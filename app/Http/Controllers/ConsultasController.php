@@ -14,6 +14,8 @@ use App\Consultas;
 use App\Metodos;
 use App\Ciexes;
 use App\Historia;
+use App\Productos;
+use App\HistoriaR;
 use App\AntecedentesObstetricos;
 use App\Control;
 use App\HistoriaBase;
@@ -109,6 +111,7 @@ class ConsultasController extends Controller
       $consulta = Consultas::where('id','=',$consulta)->first();
       $hist = HistoriaBase::where('id_paciente','=',$consulta->id_paciente)->first();
       $historias = Historia::where('id_paciente','=',$consulta->id_paciente)->get();
+      $productos = Productos::where('estatus','=',1)->orderBy('nombre','ASC')->get();
 
       $paciente = Pacientes::where('id','=',$consulta->id_paciente)->first();
 
@@ -117,7 +120,7 @@ class ConsultasController extends Controller
 
 
 
-        return view('consultas.historia',compact('cie','cie1','consulta','hist','historias','paciente'));
+        return view('consultas.historia',compact('cie','cie1','consulta','productos','hist','historias','paciente'));
     }
 
     
@@ -264,6 +267,30 @@ class ConsultasController extends Controller
       ->select('*')
       ->where('id','=', Auth::user()->id)
       ->first();  
+
+      if (isset($request->id_laboratorio)) {
+        foreach ($request->id_laboratorio['laboratorios'] as $key => $lab) {
+          if (!is_null($lab['laboratorio'])) {
+
+           $pedidos = new HistoriaR();
+           $pedidos->id_historia = $con->id;
+           $pedidos->id_producto =$lab['laboratorio'];
+           $pedidos->texto =$request->monto_abol['laboratorios'][$key]['abono'];
+           $pedidos->consulta =$request->consulta;
+           $pedidos->observacion =$request->obser;
+           $pedidos->save();
+  
+          } else {
+  
+          }
+        }
+      }
+
+
+      $con_fin = Consultas::where('id','=',$request->consulta)->first();
+      $con_fin->historia = 2;
+      $con_fin->id_historia = $con->id;
+      $con_fin->save();
 
 
       $at_fin = Atenciones::where('id','=',$consultaf->id_atencion)->first();
@@ -528,6 +555,45 @@ class ConsultasController extends Controller
 
 
 
+
+    }
+
+    public function receta($id)
+    {
+
+      $consulta = DB::table('consultas as a')
+      ->select('a.id','a.id_paciente','a.id_historia','a.id_atencion','a.usuario','a.historia','a.id_especialista','a.tipo','a.sede','a.created_at','a.estatus','a.monto','b.nombres','b.apellidos','b.dni','b.fechanac','c.name as nameo','c.lastname as lasto','e.name as namee','e.lastname as laste','at.created_at as fecha','hist.obser','hist.prox')
+      ->join('pacientes as b','b.id','a.id_paciente')
+      ->join('users as c','c.id','a.usuario')
+      ->join('users as e','e.id','a.id_especialista')
+      ->join('atenciones as at','at.id','a.id_atencion')
+      ->join('historia as hist','hist.id','a.id_historia')
+      ->where('a.id', '=', $id)
+      ->first(); 
+
+
+      $paciente = Pacientes::where('id','=',$consulta->id_paciente)->first();
+      $edad = Carbon::parse($paciente->fechanac)->age;
+
+      
+      $receta = DB::table('historia_r as a')
+      ->select('a.*','u.nombre as producto')
+      ->join('productos as u','u.id','a.id_producto')
+      ->where('a.consulta', '=',$id)
+      ->get(); 
+
+
+     
+       
+
+      
+      $view = \View::make('consultas.receta', compact('consulta','receta','edad'));
+
+      $pdf = \App::make('dompdf.wrapper');
+      $pdf->loadHTML($view);
+   
+     
+      return $pdf->stream('report-receta'.'.pdf');
 
     }
 

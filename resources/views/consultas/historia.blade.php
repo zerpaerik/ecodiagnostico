@@ -351,12 +351,15 @@
                     <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" disabled  name="sexo" value="{{$hist->ex_aux}}">
                   </div>
                     </div>
-                   <div class="row">
-                     <div class="col-md-12">
-                    <label for="exampleInputEmail1">Plan de Tratamiento</label>
-                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control" id="nombre" disabled  name="sexo" value="{{$hist->plan}}">
+                 
 
-                  </div>
+                   <div class="col-md-12">
+                    <label for="exampleInputEmail1">Observaciones Plan de Tratamiento</label>
+                    <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"  id="nombre" name="obs_plan" placeholder=""  >
+                   </div>
+
+
+                    <br>
                     </div>
                    <div class="row">
                      <div class="col-md-12">
@@ -584,12 +587,50 @@
                   </div>
                     </div>
                    <br>
-                   <div class="row">
-                     <div class="col-md-12">
                     <label for="exampleInputEmail1">Plan de Tratamiento</label>
-                    <textarea class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" rows="3"  name="plan" placeholder="Plan de Tratamiento"></textarea>
+            <!-- sheepIt Form -->
+              <div id="laboratorios" class="embed ">
+            
+                <!-- Form template-->
+                <div id="laboratorios_template" class="template row">
 
-                  </div>
+                    <label for="laboratorios_#index#_laboratorio" class="col-sm-2 control-label">Productos</label>
+                    <div class="col-sm-3">
+                      <select id="laboratorios_#index#_laboratorio" name="id_laboratorio[laboratorios][#index#][laboratorio]" class="selectLab form-control select22">
+                        <option value="1">Seleccionar Producto</option>
+                        @foreach($productos as $pac)
+                          <option value="{{$pac->id}}">
+                            {{$pac->nombre}} {{$pac->activo}}
+                          </option>
+                        @endforeach
+                      </select>
+                    </div>
+
+            
+              
+                    <label for="laboratorios_#index#_abonoL" class="col-sm-1 control-label">Indic</label>
+                    <div class="col-sm-6">
+
+                      <input id="laboratorios_#index#_abonoL" name="monto_abol[laboratorios][#index#][abono] type="text" class="number form-control abonoL" placeholder="Indicación" data-toggle="tooltip" data-placement="bottom" title="Abono">
+                    </div>
+
+                    <a id="laboratorios_remove_current" style="cursor: pointer;"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+                </div>
+                <!-- /Form template-->
+                
+                <!-- No forms template -->
+                <div id="laboratorios_noforms_template" class="noItems col-sm-12 text-center">Ningún Producto</div>
+                <!-- /No forms template-->
+                
+                <!-- Controls -->
+                <div id="laboratorios_controls" class="controls col-sm-11 col-sm-offset-1">
+                    <div id="laboratorios_add" class="btn btn-default form add"><a><span><i class="fa fa-plus-circle"></i> Agregar Producto</span></a></div>
+                    <div id="laboratorios_remove_last" class="btn form removeLast"><a><span><i class="fa fa-close-circle"></i> Eliminar ultimo</span></a></div>
+                    <div id="laboratorios_remove_all" class="btn form removeAll"><a><span><i class="fa fa-close-circle"></i> Eliminar todos</span></a></div>
+                </div>
+                <!-- /Controls -->
+                
+            </div>
                     </div>
                     <br>
                    <div class="row">
@@ -723,6 +764,9 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../../dist/js/demo.js"></script>
 
+<script src="../../plugins/sheepit/jquery.sheepItPlugin.min.js"></script>
+
+
 <script language="javascript">
 
 function disableEnterKey(e) 
@@ -758,6 +802,27 @@ function disableEnterKey(e)
 
 <script>
   $(function () {
+
+    // Main sheepIt form
+      var phonesForm = $("#laboratorios").sheepIt({
+          separator: '',
+          allowRemoveCurrent: true,
+          allowAdd: true,
+          allowRemoveAll: true,
+          allowRemoveLast: true,
+
+          // Limits
+          maxFormsCount: 10,
+          minFormsCount: 1,
+          iniFormsCount: 0,
+
+          removeAllConfirmationMsg: 'Seguro que quieres eliminar todos?',
+          
+          afterRemoveCurrent: function(source, event){
+            calcular();
+            calculo_general();
+          }
+});
     //Initialize Select2 Elements
     $('.select2').select2()
 
