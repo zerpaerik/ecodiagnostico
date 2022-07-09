@@ -141,6 +141,8 @@
                     @endif
 
                     <a href="{{route('descargar2',$an->informe_guarda)}}" class="btn btn-success" target="_blank">Ver Informe</a>
+                    <a style="margin-top: 10px;" href="resultados-archivo-{{$an->id}}" class="btn-sm btn-warning" target="_blank">Archivos</a>
+
 
 
                     </td>
